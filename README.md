@@ -1,28 +1,41 @@
 # Vandoot: Edge-AI Forest Threat Detection System 🌲🔥
+> **Current Status:** Phase 1 Complete (AI Model Design, Training & Quantization).  
+> **Next Phase:** Hardware Integration (ESP32/LoRa) & Field Testing.
 
-An automated forest monitoring system leveraging **Edge AI** to detect wildfires, intruders, and animals in real-time. Designed to run on resource-constrained hardware (ESP32 + Raspberry Pi) using **Quantized MobileNetV1**.
+Vandoot is a distributed IoT system designed to detect forest fires and intruders in real-time. This repository currently hosts the **Computer Vision & Optimization Pipeline** (The "Brain"), engineered to run on ultra-low-power edge devices.
 
-### 🚀 Key Features
-* **Edge Intelligence:** Deploys a custom Vision AI model directly on low-power devices.
-* **Optimized Performance:** Achieved a **<300KB model size** using **Int8 Quantization**, enabling inference on limited RAM.
-* **False Alarm Reduction:** Implemented "Context-Aware" training with diverse seasonal datasets (e.g., autumn foliage) to maintain **92% accuracy** without confusing warm colors for fire.
-* **Distributed Architecture:** Orchestrates communication between ESP32 satellite nodes (Vision) and a Raspberry Pi Central Hub (Alerts).
-
-### 🛠️ Tech Stack
-* **Hardware:** Raspberry Pi 4, ESP32-CAM
-* **AI/ML:** TensorFlow Lite, OpenCV, MobileNetV1
-* **Language:** Python 3.9, C++ (Arduino IDE)
-* **Optimization:** Post-training Quantization (Int8)
-
-### 📊 Model Performance (The "Why")
-Standard MobileNet models are too large (~15MB) for edge microcontrollers. 
-* **My Approach:** I retrained MobileNetV1 on a curated dataset and applied post-training quantization.
-* **Result:** Reduced model size by **~98%** (from 15MB to ~280KB) with minimal accuracy loss.
-
-### 📂 Project Structure
-* `src/train_model.py`: Training pipeline with data augmentation.
-* `src/quantize.py`: Script used to convert .h5 model to .tflite.
-* `models/`: Contains the final quantized .tflite model.
+### 🎯 Project Goal
+To replace expensive industrial sensors with a low-cost, distributed network of **ESP32-CAM nodes** (Satellite) and a **Raspberry Pi** (Central Hub), using on-device Edge AI to minimize bandwidth and power.
 
 ---
-*Note: This was a collaborative group project. My primary contributions were the AI pipeline design, model quantization, and backend integration.*
+
+### ✅ Phase 1 Achievements (Software & AI)
+The focus of this phase was to architect a vision model small enough to run on a microcontroller (<500KB) without losing accuracy.
+
+- [x] **Dataset Synthesis:** Curated and pre-processed 1,000+ images (Fire vs. Non-Fire) resized to 96x96 for embedded compatibility.
+- [x] **Model Architecture:** Retrained **MobileNetV1 (Alpha 0.25)** for high-speed inference.
+- [x] **Int8 Quantization:** Successfully compressed the model from **~15MB (Float32)** to **<300KB (Int8)** using TensorFlow Lite Post-Training Quantization.
+- [x] **Simulation:** Verified inference logic in Python before hardware deployment.
+
+### 🚧 Phase 2 Roadmap (Hardware Implementation)
+- [ ] Flash `.cc` model array to **ESP32-CAM**.
+- [ ] Implement **Zero Crossing Rate (ZCR)** algorithm for basic audio anomaly detection (e.g., Chainsaws).
+- [ ] Establish **LoRa (Long Range)** communication protocol between Nodes and Hub.
+- [ ] Deploy **Random Forest** validation logic on Raspberry Pi.
+
+---
+
+### 📂 Repository Structure
+Since hardware integration is pending, this repo focuses on the ML pipeline:
+
+```text
+Vandoot/
+├── 📁 datasets/            # Scripts used for dataset synthesis & resizing
+├── 📁 models/              # The Trained "Brain"
+│   ├── model_float32.tflite     # Original Model (High Accuracy)
+│   └── model_quantized.cc       # FINAL OUTPUT: C-array for ESP32 (<300KB)
+├── 📁 src/
+│   ├── train_mobilenet.py  # Transfer Learning script
+│   ├── quantize_model.py   # Optimization script (Float32 -> Int8)
+│   └── simulate_inference.py # PC-based testing script
+└── requirements.txt
