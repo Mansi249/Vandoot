@@ -1,79 +1,61 @@
-# Vandoot: Edge-AI Forest Threat Detection System 🌲🔥
-> **Current Status:** Phase 1 Complete (AI Model Design, Training & Validation).  
-> **Performance:** 92% Accuracy on Test Set | <300KB Model Size.
+# 🌲 Vandoot: Edge-AI Forest Threat Detection
 
-Vandoot is a distributed IoT system designed to detect forest fires, intruders, and wildlife in real-time. This repository currently hosts the **Computer Vision & Optimization Pipeline** (The "Brain"), engineered to run on ultra-low-power ESP32 microcontrollers using quantized TensorFlow Lite.
+![Python](https://img.shields.io/badge/Python-3.9-blue)
+![Model](https://img.shields.io/badge/Model-MobileNetV1%20(Quantized)-green)
+![Status](https://img.shields.io/badge/Status-Prototype%20%26%20Simulation-yellow)
 
-### 🎯 Project Goal
-To replace expensive industrial sensors with a low-cost network of **ESP32-CAM nodes** (Satellite) and a **Raspberry Pi** (Central Hub), using on-device Edge AI to minimize bandwidth and power consumption.
-
----
-
-### ✅ Phase 1 Achievements (Software & AI)
-The focus of this phase was to architect a vision model small enough to run on a microcontroller (<500KB) without losing accuracy.
-
-- [x] **Dataset Synthesis:** Curated and pre-processed 2,000+ images (Fire vs. Non-Fire) resized to 96x96 for embedded compatibility.
-- [x] **Model Architecture:** Retrained **MobileNetV1 (Alpha 0.25)** for high-speed inference.
-- [x] **Int8 Quantization:** Successfully compressed the model from **~15MB (Float32)** to **<300KB (Int8)** using TensorFlow Lite Post-Training Quantization.
-- [x] **Validation:** Achieved 97% Precision on Fire detection, ensuring minimal false alarms.
-
-### 📊 Model Performance
-I trained and quantized the model specifically for this task. Below are the actual evaluation results on the test dataset (2,039 images):
-
-| Class | Precision | Recall | F1-Score | Support |
-| :--- | :---: | :---: | :---: | :---: |
-| **🔥 Fire** | **0.97** | 0.88 | 0.92 | 523 |
-| **👤 Human** | 0.86 | **0.99** | 0.92 | 503 |
-| **🐾 Animal** | 0.97 | 0.94 | 0.95 | 480 |
-| **🌫️ Empty** | 0.89 | 0.87 | 0.88 | 533 |
-
-**Key Takeaways:**
-* **Reliability:** The model has **97% Precision for Fire**, meaning false positives (confusing a red shirt for fire) are extremely rare.
-* **Safety:** The **99% Recall for Humans** ensures that if a poacher or intruder is present, the system almost never misses them.
+An IoT & Computer Vision project designed to detect **Forest Fires, Intruders, and Wildlife** in real-time. This repository hosts the **AI & Software Pipeline** (Phase 1), currently optimized for ESP32 deployment.
 
 ---
 
-### 📂 Repository Structure
-Since hardware integration is pending, this repo focuses on the ML pipeline:
+## 📖 Project Overview
 
-```text
-Vandoot/
-├── 📁 datasets/            # Training data (Fire vs Non-Fire)
-├── 📁 models/              # The Trained "Brain"
-│   ├── vandoot_model.tflite     # Final Quantized Model
-│   └── model_data.cc            # C-array Hex Dump for ESP32
-├── 📁 src/
-│   ├── preprocess_dataset.py  # Script 1: Resizes raw images to 96x96
-│   ├── train_model.py         # Script 2: Trains MobileNetV1 & converts to Int8
-│   └── evaluate_model.py      # Script 3: Generates Accuracy Report & Confusion Matrix
-└── requirements.txt
-🛠️ Tech Stack
-Core: Python 3.9, TensorFlow 2.x
+Traditional forest monitoring relies on slow satellite data. This project aims to build a **Distributed Intelligence** system using "TinyML" to detect threats in milliseconds.
 
-Edge ML: TensorFlow Lite Micro (Int8 Quantization)
+**Current Focus:**
+* **Phase 1 (Completed):** AI Model design, training, and quantization for edge devices.
+* **Phase 2 (In Progress):** Hardware integration with ESP32 sensors and LoRa communication.
 
-Data Processing: OpenCV, NumPy
+## 📂 Dataset & Constraints
 
-Hardware Target: ESP32-CAM (AI Node), Raspberry Pi 4 (Gateway)
+* **Dataset:** ~2,000 synthesized images (Fire, Human, Animal, Empty) resized to **96x96 pixels**.
+* **Target Hardware:** ESP32-CAM (AI Node) + Raspberry Pi 4 (Gateway).
+* **Constraint:** Model compressed to **<300KB (Int8)** to fit within microcontroller flash memory.
 
-🚀 How to Replicate Results
-Clone the repo:
+## 🛠️ Methodology (Software Phase)
 
-Bash
+1.  **Data Pipeline:** Automated resizing script (`preprocess_dataset.py`) to standardize inputs.
+2.  **Model Engineering:**
+    * Retrained **MobileNetV1 (Alpha 0.25)** for high-speed inference.
+    * Applied **Post-Training Quantization (Int8)** using TensorFlow Lite.
+3.  **Simulation:** Verified logic with a custom Python inference script before hardware deployment.
 
-git clone [https://github.com/Mansi249/Vandoot-Edge-AI.git](https://github.com/Mansi249/Vandoot-Edge-AI.git)
-cd Vandoot-Edge-AI
-Install dependencies:
+## 📊 Phase 1 Performance (The "Brain")
 
-Bash
+| Metric | Result | Notes |
+| :--- | :--- | :--- |
+| **Model Size** | **280 KB** | Reduced from 15MB (98% compression). |
+| **Accuracy** | **92%** | Tested on 2,039 validation images. |
+| **Fire Precision**| **0.97** | Ultra-low false alarm rate. |
 
-pip install -r requirements.txt
-Run the pipeline:
+## 🚀 How to Run (Simulation)
 
-Step 1: python src/preprocess_dataset.py (Prepares images)
+1.  **Clone & Install:**
+    ```bash
+    git clone [https://github.com/Mansi249/Vandoot-Edge-AI.git](https://github.com/Mansi249/Vandoot-Edge-AI.git)
+    pip install -r requirements.txt
+    ```
+2.  **Run the AI Pipeline:**
+    ```bash
+    python src/train_model.py  # Generates the .tflite model
+    python src/evaluate_model.py  # Displays accuracy graphs
+    ```
 
-Step 2: python src/train_model.py (Trains & creates .tflite file)
+## 🔮 Roadmap & Future Work
 
-Step 3: python src/evaluate_model.py (Shows accuracy graphs)
-
-Developed by Mansi Sangwan. This project is part of an ongoing R&D initiative to democratize forest monitoring technology. Note: This was a collaborative group project. My primary contributions were the AI pipeline design, model quantization, and backend integration.
+The AI "Brain" is ready. The next steps focus on physical deployment:
+* [ ] **Hardware:** Flash the C-byte array onto ESP32-CAM units.
+* [ ] **Comms:** Implement LoRa (Long Range) protocol for forest-wide data transmission.
+* [ ] **Power:** Optimize deep-sleep cycles for solar-powered operation.
+---
+*Current repository contains the AI/Software stack only. Hardware schematics to be added in Phase 2.*
