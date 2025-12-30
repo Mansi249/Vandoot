@@ -2,19 +2,31 @@
 
 ![Python](https://img.shields.io/badge/Python-3.9-blue)
 ![Model](https://img.shields.io/badge/Model-MobileNetV1%20(Quantized)-green)
-![Status](https://img.shields.io/badge/Status-Prototype%20%26%20Simulation-yellow)
+![Status](https://img.shields.io/badge/Status-Prototype%20(Phase%201)-yellow)
 
-An IoT & Computer Vision project designed to detect **Forest Fires, Intruders, and Wildlife** in real-time. This repository hosts the **AI & Software Pipeline** (Phase 1), currently optimized for ESP32 deployment.
+An IoT & Computer Vision project designed to detect **Forest Fires, Intruders, and Wildlife** in real-time. This repository hosts the **AI & Software Pipeline**, currently optimized for ESP32 deployment.
+
+---
+
+## 👥 Project Context & Roles
+**This is a collaborative Group Project developed by a team of engineering students.**
+
+* **My Role (Lead AI Engineer):**
+    * Architected the **Computer Vision Pipeline** (MobileNetV1).
+    * Executed **Dataset Synthesis** and pre-processing.
+    * Performed **Int8 Quantization** to fit the model into <300KB flash memory.
+    * Generated the **C-Byte Array** firmware integration for the ESP32.
+* **Team Scope:** Hardware assembly, power management (Solar/Battery), and physical casing design are handled by other team members.
 
 ---
 
 ## 📖 Project Overview
 
-Traditional forest monitoring relies on slow satellite data. This project aims to build a **Distributed Intelligence** system using "TinyML" to detect threats in milliseconds.
+Traditional forest monitoring relies on slow satellite data or expensive sensors. This project builds a **Distributed Intelligence** system using "TinyML" to detect threats in milliseconds directly on the edge.
 
 **Current Focus:**
-* **Phase 1 (Completed):** AI Model design, training, and quantization for edge devices.
-* **Phase 2 (In Progress):** Hardware integration with ESP32 sensors and LoRa communication.
+* **Phase 1 (Completed):** Vision AI design, training, and quantization.
+* **Phase 2 (In Progress):** Audio analysis, Sensor Fusion, and Hardware integration.
 
 ## 📂 Dataset & Constraints
 
@@ -22,7 +34,7 @@ Traditional forest monitoring relies on slow satellite data. This project aims t
 * **Target Hardware:** ESP32-CAM (AI Node) + Raspberry Pi 4 (Gateway).
 * **Constraint:** Model compressed to **<300KB (Int8)** to fit within microcontroller flash memory.
 
-## 🛠️ Methodology (Software Phase)
+## 🛠️ Methodology (My Contribution)
 
 1.  **Data Pipeline:** Automated resizing script (`preprocess_dataset.py`) to standardize inputs.
 2.  **Model Engineering:**
@@ -57,5 +69,6 @@ The AI "Brain" is ready. The next steps focus on physical deployment:
 * [ ] **Hardware:** Flash the C-byte array onto ESP32-CAM units.
 * [ ] **Comms:** Implement LoRa (Long Range) protocol for forest-wide data transmission.
 * [ ] **Power:** Optimize deep-sleep cycles for solar-powered operation.
+
 ---
-*Current repository contains the AI/Software stack only. Hardware schematics to be added in Phase 2.*
+*Note: This repository contains the source code for the AI/Software subsystem only.*
